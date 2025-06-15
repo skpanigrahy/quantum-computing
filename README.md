@@ -1,2 +1,2 @@
 # quantum-computing
-All Quantum Comput9ing Related Articles
+All Quantum Computing Related Articles
