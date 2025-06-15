@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Report: The Frontiers of Trapped-Ion Quantum Computing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony Neutrals -->
+    <!-- Application Structure Plan: A multi-section, single-page application with a fixed sidebar navigation. This structure avoids a long, tedious scroll and allows users to explore topics non-linearly, catering to different levels of expertise. The flow is designed to be logical: from foundational concepts ('The Quantum Advantage'), to the physical components ('The Hardware'), to the operational logic ('Speaking Quantum'), to future challenges ('Scaling Up'), and finally to a key practical use case ('Solving the Unsolvable'). This thematic and task-oriented structure was chosen over a linear report format to enhance usability, engagement, and comprehension of the complex subject matter. -->
+    <!-- Visualization & Content Choices:
+        - Report Info: Advantages of Trapped Ions -> Goal: Inform & Engage -> Viz: Interactive cards with hover effects -> Justification: More engaging than a simple list, highlights key strengths upfront. -> Method: HTML/CSS.
+        - Report Info: Table 2 (Ion Species) -> Goal: Compare qubit candidates -> Viz: Interactive bar chart updated by buttons -> Justification: Simplifies comparison of multiple metrics (fidelity, coherence) across different ions, making complex data accessible. -> Library: Chart.js.
+        - Report Info: Gate Mechanisms (MS, Cirac-Zoller) -> Goal: Explain complex processes -> Viz: Step-by-step interactive diagrams -> Justification: Breaks down abstract quantum operations into a manageable, user-controlled sequence, greatly improving understanding over static text. -> Method: HTML/CSS/JS.
+        - Report Info: Table 4 (QEC Codes) -> Goal: Compare error correction efficiency -> Viz: Interactive bubble chart -> Justification: Effectively displays three dimensions of data (physical qubits, logical qubits, error correction power), showing the trade-offs and advantages of different QEC codes in a single, powerful visual. -> Library: Chart.js.
+        - Report Info: Table 3 (Gate Performance) -> Goal: Compare gate speed vs. fidelity -> Viz: Grouped bar chart -> Justification: Clearly visualizes the critical trade-off between operational speed and accuracy, a key engineering challenge. -> Library: Chart.js.
+        - Report Info: Protein Folding Application -> Goal: Showcase a real-world application -> Viz: A central explanatory diagram and data cards -> Justification: Connects the abstract quantum concepts to a tangible, high-impact problem, demonstrating the technology's practical relevance. -> Method: HTML/CSS.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F8F7F4; /* Light cream background */
+            color: #2F4F4F; /* Dark Slate Gray for text */
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+        .nav-link.active {
+            background-color: #E8E5E0;
+            color: #4682B4; /* Steel Blue for active link text */
+            border-left-color: #4682B4;
+        }
+        .nav-link:hover:not(.active) {
+            background-color: #F0EDE8;
+            border-left-color: #DAA520; /* Goldenrod for hover */
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .card {
+            background-color: #FFFFFF;
+            border: 1px solid #E0DED9;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.07), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .btn-primary {
+            background-color: #4682B4;
+            color: white;
+            transition: background-color 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #5A9BCF;
+        }
+        .btn-secondary {
+            background-color: #E8E5E0;
+            color: #2F4F4F;
+            border: 1px solid #D1CFC9;
+            transition: background-color 0.3s ease;
+        }
+        .btn-secondary.active {
+            background-color: #DAA520;
+            color: white;
+            border-color: #DAA520;
+        }
+        .chart-container {
+            position: relative;
+            margin: auto;
+            width: 100%;
+            height: 300px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="flex flex-col md:flex-row min-h-screen">
+        <!-- Sidebar Navigation -->
+        <aside class="w-full md:w-64 bg-white border-r border-gray-200 shadow-lg shrink-0">
+            <div class="p-6">
+                <h1 class="text-xl font-bold text-gray-800">Trapped-Ion QC</h1>
+                <p class="text-sm text-gray-500 mt-1">An Interactive Exploration</p>
+            </div>
+            <nav id="main-nav" class="flex flex-row md:flex-col mt-4 md:mt-0">
+                <a href="#introduction" class="nav-link active p-4 text-sm font-medium">1. The Quantum Advantage</a>
+                <a href="#hardware" class="nav-link p-4 text-sm font-medium">2. The Hardware</a>
+                <a href="#operations" class="nav-link p-4 text-sm font-medium">3. Speaking Quantum</a>
+                <a href="#scaling" class="nav-link p-4 text-sm font-medium">4. Scaling & Correction</a>
+                <a href="#applications" class="nav-link p-4 text-sm font-medium">5. Solving the Unsolvable</a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="flex-1 p-4 sm:p-6 md:p-10">
+            <!-- Introduction Section -->
+            <section id="introduction" class="content-section active">
+                <h2 class="text-3xl font-bold text-gray-800">The Quantum Advantage of Trapped Ions</h2>
+                <p class="mt-4 text-lg text-gray-600">This application provides an interactive journey into trapped-ion quantum computing, one of the most promising technologies for building powerful quantum machines. Here, you can explore the fundamental principles and key advantages that position trapped ions at the forefront of the quantum revolution. We'll examine why using individual atoms as qubits offers unparalleled precision and stability.</p>
+
+                <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">Nature's Perfect Qubits</h3>
+                        <p class="mt-2 text-sm text-gray-600">Every ion of a specific element is perfectly identical. This eliminates manufacturing defects found in solid-state qubits, ensuring every qubit is of the highest quality and consistency.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">Exceptional Coherence</h3>
+                        <p class="mt-2 text-sm text-gray-600">Trapped ions are magnificently isolated from environmental noise, allowing them to hold their quantum state (coherence) for seconds or even minutes—vastly longer than many alternatives.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">Unrivaled Fidelity</h3>
+                        <p class="mt-2 text-sm text-gray-600">Operations on trapped-ion qubits are incredibly precise. They boast the highest-fidelity single and two-qubit gates, meaning computations have extremely low error rates.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">All-to-All Connectivity</h3>
+                        <p class="mt-2 text-sm text-gray-600">Any qubit in the trap can directly interact with any other. This complete connectivity is a massive advantage for running complex algorithms efficiently without qubit "traffic jams."</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">High-Fidelity Readout</h3>
+                        <p class="mt-2 text-sm text-gray-600">Determining the final state of each qubit is done with near-perfect accuracy using state-dependent fluorescence, a reliable and well-understood technique.</p>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="font-semibold text-lg text-[#4682B4]">Room Temperature Potential</h3>
+                        <p class="mt-2 text-sm text-gray-600">While cryogenics can enhance performance, many trapped-ion systems can operate in a room-temperature vacuum chamber, simplifying the engineering challenges.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Hardware Section -->
+            <section id="hardware" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-800">Building a Quantum Computer</h2>
+                <p class="mt-4 text-lg text-gray-600">This section delves into the sophisticated hardware required to build a trapped-ion quantum computer. The core of the machine is the ion trap, which uses electromagnetic fields to suspend individual atoms in an ultra-high vacuum. Precisely tuned lasers are then used to cool, control, and read the state of these atomic qubits. Explore the interactive chart below to compare the different atomic species used as qubits.</p>
+
+                <div class="mt-8 card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-4 text-center">Comparing Qubit Candidates: Ion Species</h3>
+                    <p class="text-sm text-gray-600 text-center mb-4">Different atomic ions have unique properties. Select an ion below to see its key performance metrics. High fidelity means low error rates, while long coherence means more time for computation.</p>
+                    <div id="ion-selector" class="flex justify-center flex-wrap gap-2 mb-4">
+                        <!-- Buttons will be generated here -->
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ionChart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Operations Section -->
+            <section id="operations" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-800">Speaking Quantum: Gates and Operations</h2>
+                <p class="mt-4 text-lg text-gray-600">Quantum computations are executed through a sequence of operations called "gates." Single-qubit gates manipulate individual ions, while two-qubit entangling gates are the key to unlocking quantum power, creating complex correlations between ions. This section visualizes how these gates work and compares their performance. The Mølmer-Sørensen gate is a workhorse for creating entanglement due to its robustness and high fidelity.</p>
+                
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Interactive Gate: The Mølmer-Sørensen (MS) Gate</h3>
+                        <div id="ms-gate-viz" class="relative h-48 border-2 border-dashed border-gray-300 rounded-lg flex items-center justify-center p-4">
+                             <div class="absolute w-full h-1 bg-gray-200 top-1/2 -translate-y-1/2"></div>
+                            <div id="ionA" class="absolute z-10 w-8 h-8 rounded-full bg-blue-400 transition-all duration-500" style="left: 30%;"></div>
+                            <div id="ionB" class="absolute z-10 w-8 h-8 rounded-full bg-green-400 transition-all duration-500" style="left: 60%;"></div>
+                            <div id="laser-beam" class="absolute h-full w-2 bg-red-500/30 rounded transition-opacity duration-500 opacity-0" style="left: calc(45% - 1px);"></div>
+                            <div id="ms-gate-text" class="absolute bottom-2 text-sm text-gray-500">Step 1: Ions are trapped and cooled.</div>
+                        </div>
+                        <div class="mt-4 flex justify-center gap-4">
+                            <button id="ms-gate-prev" class="btn-secondary px-4 py-2 rounded-md text-sm">Previous</button>
+                            <button id="ms-gate-next" class="btn-primary px-4 py-2 rounded-md text-sm">Next Step</button>
+                        </div>
+                    </div>
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Gate Performance: Speed vs. Fidelity</h3>
+                        <p class="text-sm text-gray-600 text-center mb-4">There is often a trade-off between how fast a gate is and how accurate it is. This chart compares different gates on these two critical metrics.</p>
+                        <div class="chart-container">
+                             <canvas id="gatePerformanceChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- Scaling Section -->
+            <section id="scaling" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-800">Scaling Up & Staying Correct</h2>
+                <p class="mt-4 text-lg text-gray-600">Building quantum computers with thousands or millions of qubits is a major engineering challenge. This section explores two key frontiers: scalable architectures like the Quantum CCD, which acts like a "racetrack" for ions, and Quantum Error Correction (QEC), which protects fragile quantum information from noise. The interactive chart below shows how different QEC codes trade physical qubits for error-correcting power.</p>
+
+                <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Architecture: Quantum CCD</h3>
+                        <div id="qccd-viz" class="relative w-full h-64 bg-gray-50 rounded-lg p-4 grid grid-cols-3 grid-rows-2 gap-2">
+                           <div class="bg-blue-100 rounded flex items-center justify-center text-xs font-semibold text-blue-800 col-span-1 row-span-2">Memory Zone</div>
+                           <div id="qccd-ion" class="absolute w-6 h-6 bg-purple-500 rounded-full z-10 transition-all duration-1000" style="top: 40%; left: 15%;"></div>
+                           <div class="bg-green-100 rounded flex items-center justify-center text-xs font-semibold text-green-800 col-start-2 col-span-2">Processing Zone</div>
+                           <div class="bg-red-100 rounded flex items-center justify-center text-xs font-semibold text-red-800 col-start-2 col-span-2">Readout Zone</div>
+                        </div>
+                        <p class="text-sm text-gray-600 mt-2 text-center">In a QCCD, ions are shuttled between zones for storage, computation, and measurement. Click the button to animate.</p>
+                        <div class="mt-4 flex justify-center">
+                            <button id="qccd-animate" class="btn-primary px-4 py-2 rounded-md text-sm">Animate Ion Shuttle</button>
+                        </div>
+                    </div>
+
+                    <div class="card p-6 rounded-lg">
+                        <h3 class="text-xl font-semibold mb-4 text-center">Quantum Error Correction (QEC) Codes</h3>
+                        <p class="text-sm text-gray-600 text-center mb-4">QEC codes use multiple physical qubits to create one robust "logical" qubit. The "distance" (d) of a code measures its power to correct errors.</p>
+                        <div class="chart-container">
+                            <canvas id="qecChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            
+            <!-- Applications Section -->
+            <section id="applications" class="content-section">
+                <h2 class="text-3xl font-bold text-gray-800">Solving the Unsolvable: Protein Folding</h2>
+                <p class="mt-4 text-lg text-gray-600">The ultimate goal of quantum computing is to solve problems intractable for classical computers. A prime example is protein folding, a biological grand challenge with huge implications for medicine. Recently, researchers used a 36-qubit trapped-ion computer to tackle this problem, mapping the complex protein structure onto qubits and finding the optimal, lowest-energy fold. This represents one of the largest demonstrations of a quantum algorithm solving a real-world problem on hardware to date.</p>
+
+                <div class="mt-8 card p-6 rounded-lg">
+                    <h3 class="text-xl font-semibold mb-2 text-center">Case Study: The BF-DCQO Algorithm</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-[#DAA520]">12</div>
+                            <div class="text-sm font-medium text-gray-500">Amino Acids</div>
+                            <p class="text-xs text-gray-500 mt-1">The size of the peptide chain folded.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-[#4682B4]">33</div>
+                            <div class="text-sm font-medium text-gray-500">Qubits Used</div>
+                             <p class="text-xs text-gray-500 mt-1">To represent the folding problem.</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-4xl font-bold text-green-600">1000+</div>
+                            <div class="text-sm font-medium text-gray-500">Interactions</div>
+                             <p class="text-xs text-gray-500 mt-1">Modeled by the quantum circuit.</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 p-4 bg-gray-50 rounded-lg">
+                        <p class="font-semibold text-center">Protein Chain ➔ Quantum Circuit ➔ Optimal 3D Fold</p>
+                        <p class="text-sm text-gray-600 mt-2">The process involves encoding the protein's possible turns onto qubits. The quantum computer then explores the vast landscape of possible folds to find the ground state (lowest energy), which corresponds to the correctly folded protein. The all-to-all connectivity of trapped ions is crucial for modeling the dense web of interactions between amino acids.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- Data Store ---
+            const ionData = {
+                'Yb-171+': {
+                    labels: ['Single-Qubit Fidelity (%)', 'Two-Qubit Fidelity (%)', 'Coherence (s)'],
+                    data: [99.99, 99.5, 600],
+                    color: 'rgba(70, 130, 180, 0.6)'
+                },
+                'Ca-43+': {
+                    labels: ['Single-Qubit Fidelity (%)', 'Two-Qubit Fidelity (%)', 'Coherence (s)'],
+                    data: [99.93, 99.0, 50],
+                    color: 'rgba(218, 165, 32, 0.6)'
+                },
+                'Ba-137+': {
+                    labels: ['Single-Qubit Fidelity (%)', 'Two-Qubit Fidelity (%)', 'Coherence (s)'],
+                    data: [99.9, 99.9, 60],
+                    color: 'rgba(50, 205, 50, 0.6)'
+                },
+                'Be-9+': {
+                    labels: ['Single-Qubit Fidelity (%)', 'Two-Qubit Fidelity (%)', 'Coherence (s)'],
+                    data: [99.99, 98.0, 1.5],
+                    color: 'rgba(255, 99, 132, 0.6)'
+                }
+            };
+            
+            const gatePerformanceData = {
+                labels: ['Mølmer-Sørensen', 'Cirac-Zoller', 'Microwave-driven'],
+                datasets: [
+                    {
+                        label: 'Fidelity (%)',
+                        data: [99.9, 80, 99.5],
+                        backgroundColor: 'rgba(70, 130, 180, 0.6)',
+                        yAxisID: 'yFidelity',
+                    },
+                    {
+                        label: 'Gate Time (µs)',
+                        data: [1.6, 475, 331],
+                        backgroundColor: 'rgba(218, 165, 32, 0.6)',
+                        yAxisID: 'yTime',
+                    }
+                ]
+            };
+
+            const qecData = {
+                datasets: [{
+                    label: 'Surface Code',
+                    data: [{x: 9, y: 3, r: 1*5}, {x: 25, y: 5, r: 1*5}, {x: 49, y: 7, r: 1*5}],
+                    backgroundColor: 'rgba(255, 99, 132, 0.7)'
+                }, {
+                    label: 'BB5 Code',
+                    data: [{x: 30, y: 5, r: 4*5}, {x: 48, y: 7, r: 4*5}],
+                    backgroundColor: 'rgba(54, 162, 235, 0.7)'
+                }]
+            };
+
+            // --- Chart Instances ---
+            let ionChart, gateChart, qecChart;
+
+            // --- Navigation Logic ---
+            const navLinks = document.querySelectorAll('#main-nav a');
+            const sections = document.querySelectorAll('.content-section');
+
+            const switchTab = (hash) => {
+                navLinks.forEach(link => {
+                    link.classList.toggle('active', link.hash === hash);
+                });
+                sections.forEach(section => {
+                    section.classList.toggle('active', `#${section.id}` === hash);
+                });
+            };
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const hash = e.currentTarget.hash;
+                    window.location.hash = hash;
+                    switchTab(hash);
+                });
+            });
+
+            // Initial tab setup
+            const initialHash = window.location.hash || '#introduction';
+            switchTab(initialHash);
+
+
+            // --- Chart Rendering ---
+            const renderIonChart = (ionName) => {
+                const ctx = document.getElementById('ionChart').getContext('2d');
+                const selectedIon = ionData[ionName];
+
+                if (ionChart) {
+                    ionChart.destroy();
+                }
+                
+                ionChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: selectedIon.labels,
+                        datasets: [{
+                            label: ionName + ' Performance',
+                            data: selectedIon.data,
+                            backgroundColor: selectedIon.color,
+                            borderColor: selectedIon.color.replace('0.6', '1'),
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        indexAxis: 'y',
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { display: false },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        let label = context.dataset.label || '';
+                                        if (label) { label += ': '; }
+                                        if (context.parsed.x !== null) {
+                                            label += context.parsed.x;
+                                            if (context.label.includes('%')) label += '%';
+                                            if (context.label.includes('(s)')) label += ' s';
+                                        }
+                                        return label;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                beginAtZero: true,
+                                title: { display: true, text: 'Value' },
+                                ticks: {
+                                    callback: function(value, index, values) {
+                                       // Custom ticks if needed, for now default
+                                       return value;
+                                    }
+                                }
+                            },
+                             y: {
+                                ticks: {
+                                    callback: function(value, index, ticks) {
+                                        const label = this.getLabelForValue(value);
+                                        return label.length > 16 ? label.substring(0, 15) + '...' : label;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+
+            const renderGatePerformanceChart = () => {
+                const ctx = document.getElementById('gatePerformanceChart').getContext('2d');
+                if(gateChart) gateChart.destroy();
+                gateChart = new Chart(ctx, {
+                    type: 'bar',
+                    data: gatePerformanceData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                           legend: { position: 'top' },
+                           tooltip: { mode: 'index', intersect: false }
+                        },
+                        scales: {
+                            x: { stacked: false },
+                            yFidelity: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: { text: 'Fidelity (%)', display: true },
+                                min: 60,
+                                max: 100
+                            },
+                            yTime: {
+                                type: 'logarithmic',
+                                display: true,
+                                position: 'right',
+                                title: { text: 'Gate Time (µs) - log scale', display: true },
+                                grid: { drawOnChartArea: false }
+                            }
+                        }
+                    }
+                });
+            };
+
+            const renderQecChart = () => {
+                const ctx = document.getElementById('qecChart').getContext('2d');
+                if(qecChart) qecChart.destroy();
+                qecChart = new Chart(ctx, {
+                    type: 'bubble',
+                    data: qecData,
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: { position: 'top' },
+                            tooltip: {
+                                callbacks: {
+                                    label: function(context) {
+                                        const d = context.raw;
+                                        return `${context.dataset.label}: ${d.x} physical qubits, ${d.r/5} logical qubits, distance ${d.y}`;
+                                    }
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                title: { text: 'Physical Qubits (n)', display: true }
+                            },
+                            y: {
+                                title: { text: 'Minimum Distance (d)', display: true },
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            };
+
+            // --- Interactive Elements Logic ---
+            const ionSelectorContainer = document.getElementById('ion-selector');
+            Object.keys(ionData).forEach((ionName, index) => {
+                const button = document.createElement('button');
+                button.textContent = ionName;
+                button.className = 'btn-secondary px-3 py-1 rounded-md text-sm';
+                if (index === 0) button.classList.add('active');
+                button.addEventListener('click', () => {
+                    ionSelectorContainer.querySelector('.active').classList.remove('active');
+                    button.classList.add('active');
+                    renderIonChart(ionName);
+                });
+                ionSelectorContainer.appendChild(button);
+            });
+            
+            // MS Gate Visualization
+            const msGateSteps = [
+                { text: "Step 1: Two ions are trapped and cooled to near their motional ground state.", ionA_left: '30%', ionB_left: '60%', laser_opacity: 0 },
+                { text: "Step 2: A bichromatic laser field is applied, coupling both ions' internal states to their shared motion.", ionA_left: '30%', ionB_left: '60%', laser_opacity: 1 },
+                { text: "Step 3: This laser drive creates an effective spin-spin interaction, entangling the ions.", ionA_left: '35%', ionB_left: '55%', laser_opacity: 1 },
+                { text: "Step 4: The laser is turned off. The ions are now entangled, while their motional state returns to the start.", ionA_left: '30%', ionB_left: '60%', laser_opacity: 0 }
+            ];
+            let currentMsStep = 0;
+            const msText = document.getElementById('ms-gate-text');
+            const ionA = document.getElementById('ionA');
+            const ionB = document.getElementById('ionB');
+            const laserBeam = document.getElementById('laser-beam');
+
+            const updateMsGateViz = (step) => {
+                msText.textContent = step.text;
+                ionA.style.left = step.ionA_left;
+                ionB.style.left = step.ionB_left;
+                laserBeam.style.opacity = step.laser_opacity;
+            }
+
+            document.getElementById('ms-gate-next').addEventListener('click', () => {
+                currentMsStep = (currentMsStep + 1) % msGateSteps.length;
+                updateMsGateViz(msGateSteps[currentMsStep]);
+            });
+             document.getElementById('ms-gate-prev').addEventListener('click', () => {
+                currentMsStep = (currentMsStep - 1 + msGateSteps.length) % msGateSteps.length;
+                updateMsGateViz(msGateSteps[currentMsStep]);
+            });
+
+            // QCCD Animation
+            document.getElementById('qccd-animate').addEventListener('click', () => {
+                const ion = document.getElementById('qccd-ion');
+                ion.style.left = '55%';
+                ion.style.top = '20%';
+                setTimeout(() => {
+                   ion.style.top = '70%';
+                }, 1000);
+                setTimeout(() => {
+                    ion.style.left = '15%';
+                    ion.style.top = '40%';
+                }, 2000);
+            });
+
+
+            // --- Initial Render ---
+            renderIonChart(Object.keys(ionData)[0]);
+            renderGatePerformanceChart();
+            renderQecChart();
+            updateMsGateViz(msGateSteps[0]);
+        });
+    </script>
+</body>
+</html>
