@@ -111,30 +111,32 @@
                 <h2 class="text-3xl font-bold text-gray-800">The Quantum Advantage of Trapped Ions</h2>
                 <p class="mt-4 text-lg text-gray-600">This application provides an interactive journey into trapped-ion quantum computing, one of the most promising technologies for building powerful quantum machines. Here, you can explore the fundamental principles and key advantages that position trapped ions at the forefront of the quantum revolution. We'll examine why using individual atoms as qubits offers unparalleled precision and stability.</p>
 
+                <p class="mt-6 text-base text-gray-700">The power of quantum computing stems from four core quantum mechanical principles: **superposition**, **entanglement**, **interference**, and **decoherence**. Superposition enables a qubit to exist in a probabilistic combination of both $|0\rangle$ and $|1\rangle$ simultaneously, allowing for an exponential increase in computational space. Entanglement creates an intrinsic linkage between qubits, where their states become correlated regardless of physical separation, acting as a critical resource for complex operations. Interference, the "engine" of quantum computation, amplifies desired outcomes while cancelling undesired ones. The primary challenge, **decoherence**, is the loss of quantum coherence dueishing to environmental factors, which must be minimized to maintain fragile quantum states for computation.</p>
+
                 <div class="mt-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">Nature's Perfect Qubits</h3>
-                        <p class="mt-2 text-sm text-gray-600">Every ion of a specific element is perfectly identical. This eliminates manufacturing defects found in solid-state qubits, ensuring every qubit is of the highest quality and consistency.</p>
+                        <p class="mt-2 text-sm text-gray-600">Every ion of a specific isotope is fundamentally identical, eliminating manufacturing defects and ensuring consistent, high-quality qubits. This intrinsic perfection provides a fundamental advantage over fabricated qubits.</p>
                     </div>
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">Exceptional Coherence</h3>
-                        <p class="mt-2 text-sm text-gray-600">Trapped ions are magnificently isolated from environmental noise, allowing them to hold their quantum state (coherence) for seconds or even minutes—vastly longer than many alternatives.</p>
+                        <p class="mt-2 text-sm text-gray-600">Trapped ions are magnificently isolated from environmental noise, maintaining quantum coherence for durations ranging from 1 second up to 600 seconds (for Yb-171$^+$), allowing for deeper quantum circuits.</p>
                     </div>
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">Unrivaled Fidelity</h3>
-                        <p class="mt-2 text-sm text-gray-600">Operations on trapped-ion qubits are incredibly precise. They boast the highest-fidelity single and two-qubit gates, meaning computations have extremely low error rates.</p>
+                        <p class="mt-2 text-sm text-gray-600">Operations on trapped-ion qubits are incredibly precise. Single-qubit gate fidelities can exceed 99.99%, while two-qubit gates have achieved fidelities over 99.9% (e.g., Ba$^+$), meaning computations have extremely low error rates.</p>
                     </div>
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">All-to-All Connectivity</h3>
-                        <p class="mt-2 text-sm text-gray-600">Any qubit in the trap can directly interact with any other. This complete connectivity is a massive advantage for running complex algorithms efficiently without qubit "traffic jams."</p>
+                        <p class="mt-2 text-sm text-gray-600">Any qubit in the trap can directly interact with any other via their shared collective motion (phonons). This complete connectivity significantly reduces communication overhead and noise, proving advantageous for dense problems.</p>
                     </div>
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">High-Fidelity Readout</h3>
-                        <p class="mt-2 text-sm text-gray-600">Determining the final state of each qubit is done with near-perfect accuracy using state-dependent fluorescence, a reliable and well-understood technique.</p>
+                        <p class="mt-2 text-sm text-gray-600">Determining the final state of each qubit is done with near-perfect accuracy (e.g., >99.99%) using state-dependent fluorescence detection, a reliable and well-understood technique.</p>
                     </div>
                     <div class="card p-6 rounded-lg">
                         <h3 class="font-semibold text-lg text-[#4682B4]">Room Temperature Potential</h3>
-                        <p class="mt-2 text-sm text-gray-600">While cryogenics can enhance performance, many trapped-ion systems can operate in a room-temperature vacuum chamber, simplifying the engineering challenges.</p>
+                        <p class="mt-2 text-sm text-gray-600">While cryogenics enhance performance, many trapped-ion systems can operate in a room-temperature ultra-high vacuum chamber, simplifying some engineering challenges.</p>
                     </div>
                 </div>
             </section>
@@ -143,6 +145,22 @@
             <section id="hardware" class="content-section">
                 <h2 class="text-3xl font-bold text-gray-800">Building a Quantum Computer</h2>
                 <p class="mt-4 text-lg text-gray-600">This section delves into the sophisticated hardware required to build a trapped-ion quantum computer. The core of the machine is the ion trap, which uses electromagnetic fields to suspend individual atoms in an ultra-high vacuum. Precisely tuned lasers are then used to cool, control, and read the state of these atomic qubits. Explore the interactive chart below to compare the different atomic species used as qubits.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">2.1 Trapping Mechanisms: Paul Traps</h3>
+                <p class="mt-2 text-base text-gray-700">The fundamental component is the ion trap, typically a **Paul Trap**, which uses rapidly oscillating radiofrequency (RF) electric fields to create a time-averaged effective potential that confines ions in three dimensions. Linear Paul traps are common for chaining multiple ions. These traps often operate with RF fields from 1 to 300 MHz, with amplitudes reaching hundreds of volts. Static DC potentials on segmented end electrodes provide axial confinement. Ions are loaded by ionizing neutral atomic beams (e.g., from an oven) as they pass through the trap.</p>
+                <div class="mt-4 p-4 bg-gray-50 rounded-lg">
+                    <p class="text-sm font-semibold">Typical Paul Trap Parameters:</p>
+                    <ul class="list-disc list-inside text-sm text-gray-600 mt-1">
+                        <li>RF Frequency: 1 - 300 MHz (e.g., 18 MHz)</li>
+                        <li>RF Voltage Amplitude: Hundreds of Volts (e.g., ±V split)</li>
+                        <li>Radial Secular Frequencies: ~1.4 MHz (for 18 MHz RF)</li>
+                        <li>Axial Secular Frequencies: kHz range</li>
+                        <li>Ion-Ion Spacing: Few micrometers</li>
+                    </ul>
+                </div>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">2.2 Qubit Realization: Ion Species and Encoding</h3>
+                <p class="mt-2 text-base text-gray-700">Qubits are encoded in stable electronic states of individual ions. **Hyperfine qubits** utilize two ground state hyperfine levels (e.g., Yb-171$^+$, Ca-43$^+$), offering exceptional stability and long coherence. **Optical qubits** use a ground and an excited electronic level (e.g., Ca-40$^+$), with decay times still much longer than gate operations. Yb-171$^+$ is prized for its nuclear spin shielding and high single-qubit fidelity (>99.99%). Ca-43$^+$ holds record coherence times (~50s) due to a magnetic-field insensitive "clock" transition. Ba-137$^+$ has recently achieved two-qubit gate fidelities exceeding 99.9%, demonstrating significant improvements in entanglement operations. Mid-circuit measurement and reset, critical for error correction, have also been demonstrated with Yb$^+$ and Ba$^+$.</p>
 
                 <div class="mt-8 card p-6 rounded-lg">
                     <h3 class="text-xl font-semibold mb-4 text-center">Comparing Qubit Candidates: Ion Species</h3>
@@ -154,6 +172,12 @@
                         <canvas id="ionChart"></canvas>
                     </div>
                 </div>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">2.3 Laser Systems for Qubit Control and Cooling</h3>
+                <p class="mt-2 text-base text-gray-700">Laser systems are indispensable, serving roles from ion **ionization** (e.g., two-photon process) to precise manipulation. **Laser cooling** reduces ion temperatures: **Doppler cooling** (e.g., 397 nm for Ca$^+$) to milli-Kelvin, and **Resolved Sideband Cooling (RSC)** (e.g., 729 nm for Ca$^+$) to the motional ground state, crucial for high-fidelity gates. Lasers also drive **coherent manipulation**, inducing Rabi oscillations via **Stimulated Raman Transitions** for single-qubit gates. Precise control over laser frequency (sub-MHz precision) and modulation via AOMs/EOMs is paramount.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">2.4 Ultra-High Vacuum (UHV) and Cryogenic Environments</h3>
+                <p class="mt-2 text-base text-gray-700">Maintaining qubits necessitates extreme isolation. **UHV systems**, reaching $10^{-10}$ to $10^{-11}$ Torr (e.g., using NEG pumps), minimize collisions with residual gas that cause decoherence. While some systems operate at room temperature, **cryogenic cooling** (e.g., to 4 Kelvin) significantly enhances performance by reducing thermal noise, vibrations, and motional heating rates by orders of magnitude. Cryogenics also dramatically speeds up vacuum preparation from weeks to hours and improves electronics performance, underscoring a critical "hardware-environment co-design."</p>
             </section>
 
             <!-- Operations Section -->
@@ -161,6 +185,19 @@
                 <h2 class="text-3xl font-bold text-gray-800">Speaking Quantum: Gates and Operations</h2>
                 <p class="mt-4 text-lg text-gray-600">Quantum computations are executed through a sequence of operations called "gates." Single-qubit gates manipulate individual ions, while two-qubit entangling gates are the key to unlocking quantum power, creating complex correlations between ions. This section visualizes how these gates work and compares their performance. The Mølmer-Sørensen gate is a workhorse for creating entanglement due to its robustness and high fidelity.</p>
                 
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">3.1 Qubit Initialization and State Preparation</h3>
+                <p class="mt-2 text-base text-gray-700">Qubits must be prepared in a known initial state, typically $|0\rangle$, using **optical pumping**. This involves illuminating ions with specially tuned lasers that preferentially decay into the desired "dark" state (e.g., $|0\rangle$) which no longer interacts with the laser. This process achieves fidelities exceeding 99.9%, ensuring ions are in their hyperfine and motional ground states (zero phonons).</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">3.2 Single-Qubit Gate Operations</h3>
+                <p class="mt-2 text-base text-gray-700">Single-qubit gates, analogous to classical NOT gates, are realized by driving electronic transitions within an ion. This is typically done by inducing **Rabi oscillations** using a pair of lasers in a **Stimulated Raman Transition** configuration. Two laser beams with a precisely controlled frequency difference drive a two-photon transition between the qubit states via virtual intermediate states. The phase and duration of these pulses determine the qubit rotation on the Bloch sphere. Fidelities often exceed 99.99%, with errors from photon scattering mitigated by careful laser detuning and pulse shaping.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">3.3 Two-Qubit Entangling Gates</h3>
+                <p class="mt-2 text-base text-gray-700">Entangling gates are the cornerstone of quantum computation. Trapped ions utilize their **collective quantized motion (phonons)** as a shared quantum "data bus" to mediate interactions and entangle qubits across the ion chain. This enables all-to-all connectivity.</p>
+                
+                <h4 class="text-lg font-semibold mt-4 text-gray-800">3.3.1 The Mølmer-Sørensen (MS) Gate</h4>
+                <p class="mt-2 text-base text-gray-700">The **Mølmer-Sørensen (MS) gate** is a widely used and robust entangling gate. It uses a **bichromatic laser field** with two frequencies symmetrically detuned from the red and blue motional sidebands of the ions. This creates two interaction paths that interfere destructively, decoupling the motional and spin degrees of freedom and preserving the motional state. The net result is an effective **spin-spin interaction** (often XX-type), generating entanglement. A significant advantage is its robustness to trap heating and its ability to operate even if ions are not fully ground-state cooled. When applied globally, it forms a universal set of gates with single-qubit rotations.</p>
+                <p class="mt-2 text-sm text-gray-600">The interaction Hamiltonian for Mølmer-Sørensen operations is approximately: $H(t) = i\hbar/2 \sum_{j=1}^{N} \sigma_{x,j} \sum_{p=1}^{3N} \eta_{pj} (\gamma_j(t) e^{i\delta_p t} a_p^\dagger - \gamma_j^*(t) e^{-i\delta_p t} a_p)$, where $N$ is the number of ions, $\sigma_{x,j}$ is the Pauli X operator for ion $j$, $a_p^\dagger$ and $a_p$ are creation/annihilation operators for motional mode $p$, $\eta_{pj}$ are Lamb-Dicke parameters, $\gamma_j(t)$ are laser drives, and $\delta_p$ are detunings.</p>
+
                 <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     <div class="card p-6 rounded-lg">
                         <h3 class="text-xl font-semibold mb-4 text-center">Interactive Gate: The Mølmer-Sørensen (MS) Gate</h3>
@@ -184,6 +221,15 @@
                         </div>
                     </div>
                 </div>
+                
+                <h4 class="text-lg font-semibold mt-6 text-gray-800">3.3.2 The Cirac-Zoller Gate</h4>
+                <p class="mt-2 text-base text-gray-700">The **Cirac-Zoller gate** (1995) was a seminal theoretical proposal for a CNOT gate mediated by collective motional modes. It involves a precise three-step laser pulse sequence: 1) A red sideband pulse on the control ion entangles its internal state with the motional mode; 2) A $2\pi$-pulse on the target ion induces a phase shift *only if* the motional mode is excited; 3) A second red sideband pulse on the control ion disentangles its internal state and resets the motional mode. First realized in 2003 (Ca$^+$ ions) with ~70-80% fidelity, it's foundational but generally slower and more sensitive to motional state excitation than MS gates.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">3.4 Qubit Measurement and Readout</h3>
+                <p class="mt-2 text-base text-gray-700">Qubit readout uses **state-dependent fluorescence detection**. A laser is tuned to interact only with a "bright" qubit state (e.g., $|1\rangle$), causing it to scatter photons, while the "dark" state (e.g., $|0\rangle$) remains dark. Photons are collected by high-sensitivity detectors (PMTs, SPADs) and counted to determine the state. This achieves >99.99% fidelity (e.g., Ba$^+$ SPAM fidelity of 99.9904%). While generally a destructive projective measurement, advancements like non-destructive readout (Yb-171$^+$) and **mid-circuit measurement and reset** (Ba$^+$) using auxiliary energy levels are crucial for error correction.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">3.5 Control Electronics and Automation</h3>
+                <p class="mt-2 text-base text-gray-700">Sophisticated control electronics orchestrate operations. **FPGAs** serve as central units for precise timing and waveform generation. **Digital-to-Analog Converters (DACs)** translate digital signals to analog voltages for trap electrodes, with high-resolution (e.g., 16-bit) and fast update rates (e.g., 50 MHz). **Arbitrary Waveform Generators (AWGs)** (e.g., 2.8 Gsps sampling) create complex potentials for ion shuttling and pulse shaping. **Direct Digital Synthesis (DDS) Generators** produce precise RF signals. New architectures like **WISE** aim for 1000-qubit systems by replacing dedicated signal generators with local switches, leveraging CMOS compatibility for scalability.</p>
 
             </section>
 
@@ -192,14 +238,26 @@
                 <h2 class="text-3xl font-bold text-gray-800">Scaling Up & Staying Correct</h2>
                 <p class="mt-4 text-lg text-gray-600">Building quantum computers with thousands or millions of qubits is a major engineering challenge. This section explores two key frontiers: scalable architectures like the Quantum CCD, which acts like a "racetrack" for ions, and Quantum Error Correction (QEC), which protects fragile quantum information from noise. The interactive chart below shows how different QEC codes trade physical qubits for error-correcting power.</p>
 
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">4.1 Scalability Architectures: QCCD and Ion Shuttling</h3>
+                <p class="mt-2 text-base text-gray-700">To scale beyond linear chains, **Quantum Charge-Coupled Device (QCCD) architectures** are being developed. QCCD chips feature multiple potential wells for small qubit registers, with dedicated "memory zones" and "processing zones." **Ion shuttling**, the physical movement of ions between these zones by dynamically manipulating trap potentials, is a key enabler. Efficient shuttling (optimizing for minimal time steps) is critical to reduce errors. This modularity allows for all-to-all connectivity across a large system by bringing any two ions into proximity. Another approach involves **dynamic optical potentials** to instantaneously segment a long ion crystal into smaller, reconfigurable quantum registers.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">4.2 Integrated Photonics and Modular Designs</h3>
+                <p class="mt-2 text-base text-gray-700">Delivering numerous laser beams to individual ions is a major scaling hurdle. **On-chip integrated photonic components** route lasers via waveguides fabricated directly on the ion trap chip, emitting light via grating couplers. While complex to fabricate and requiring significant layer stack modifications, this is a mature path for light delivery. For larger scales, **CMOS compatibility** becomes crucial. **Photonic interconnects** enable modular scaling by entangling distant trapped-ion memories through photon exchange, envisioning larger quantum networks.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">4.3 Quantum Error Correction (QEC) Principles</h3>
+                <p class="mt-2 text-base text-gray-700">Quantum information is fragile due to decoherence from environmental noise (heat, EM radiation, vibrations) and imperfect operations. **Quantum Error Correction (QEC)** is essential for fault-tolerant quantum computing. It encodes logical qubits using multiple physical qubits (redundancy) to detect and correct errors. **Multi-qubit syndrome measurements** extract error information without disturbing the quantum state, allowing for corrective operations to reverse detected errors. QEC requires significant physical qubit overhead and very high physical gate fidelities.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">4.4 Implementation of QEC in Trapped Ions</h3>
+                <p class="mt-2 text-base text-gray-700">Trapped ions are well-suited for QEC due to high fidelities and all-to-all connectivity, which enables efficient **syndrome extraction circuits**. Various codes are explored: **Surface Codes** (topological, defined by local measurements) and **Quantum Low-Density Parity-Check (LDPC) Codes** like **Bivariate Bicycle (BB) Codes** (state-of-the-art with long-range gates). **BB5 Codes**, a new variant, can outperform BB6 and even achieve logical error rates comparable to distance-7 Surface Codes with four times fewer physical qubits, leveraging high connectivity. Recent experimental validation (e.g., Quantinuum's H2-2) showed QEC *improved* circuit performance for quantum chemistry, highlighting memory noise as a dominant error source and proving QEC's immediate utility for NISQ devices. Mid-circuit measurement and reset are key enablers.</p>
+
                 <div class="mt-8 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
                     <div class="card p-6 rounded-lg">
                         <h3 class="text-xl font-semibold mb-4 text-center">Architecture: Quantum CCD</h3>
                         <div id="qccd-viz" class="relative w-full h-64 bg-gray-50 rounded-lg p-4 grid grid-cols-3 grid-rows-2 gap-2">
-                           <div class="bg-blue-100 rounded flex items-center justify-center text-xs font-semibold text-blue-800 col-span-1 row-span-2">Memory Zone</div>
+                           <div class="bg-blue-100 rounded flex items-center justify-center text-xs font-semibold text-blue-800 col-span-1 row-span-2 flex items-center justify-center p-2">Memory Zone (Storage)</div>
                            <div id="qccd-ion" class="absolute w-6 h-6 bg-purple-500 rounded-full z-10 transition-all duration-1000" style="top: 40%; left: 15%;"></div>
-                           <div class="bg-green-100 rounded flex items-center justify-center text-xs font-semibold text-green-800 col-start-2 col-span-2">Processing Zone</div>
-                           <div class="bg-red-100 rounded flex items-center justify-center text-xs font-semibold text-red-800 col-start-2 col-span-2">Readout Zone</div>
+                           <div class="bg-green-100 rounded flex items-center justify-center text-xs font-semibold text-green-800 col-start-2 col-span-2 flex items-center justify-center p-2">Processing Zone (Gates)</div>
+                           <div class="bg-red-100 rounded flex items-center justify-center text-xs font-semibold text-red-800 col-start-2 col-span-2 flex items-center justify-center p-2">Readout Zone (Measurement)</div>
                         </div>
                         <p class="text-sm text-gray-600 mt-2 text-center">In a QCCD, ions are shuttled between zones for storage, computation, and measurement. Click the button to animate.</p>
                         <div class="mt-4 flex justify-center">
@@ -223,6 +281,13 @@
                 <h2 class="text-3xl font-bold text-gray-800">Solving the Unsolvable: Protein Folding</h2>
                 <p class="mt-4 text-lg text-gray-600">The ultimate goal of quantum computing is to solve problems intractable for classical computers. A prime example is protein folding, a biological grand challenge with huge implications for medicine. Recently, researchers used a 36-qubit trapped-ion computer to tackle this problem, mapping the complex protein structure onto qubits and finding the optimal, lowest-energy fold. This represents one of the largest demonstrations of a quantum algorithm solving a real-world problem on hardware to date.</p>
 
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">5.1 The Protein Folding Problem: A Grand Challenge</h3>
+                <p class="mt-2 text-base text-gray-700">**Protein folding** is the fundamental process where amino acid chains spontaneously fold into specific 3D structures, which dictate their biological function. Misfolding leads to diseases like Alzheimer's. Computationally, it's an NP-hard **Higher-Order Unconstrained Binary Optimization (HUBO) problem**, scaling exponentially with protein size, making large instances intractable for classical supercomputers.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">5.2 Trapped-Ion QC for Protein Folding: BF-DCQO</h3>
+                <p class="mt-2 text-base text-gray-700">Trapped-ion quantum computers approach protein folding as a **ground-state search problem**, where the optimal fold is the lowest energy state of a quantum Hamiltonian. The **Bias-Field Digitized Counterdiabatic Quantum Optimization (BF-DCQO) algorithm**, a non-variational method, avoids barren plateaus and is compatible with noisy hardware. It dynamically updates bias fields to guide the system to lower energy states. For simulation, each protein turn is encoded with two qubits, translating 12 amino acids into circuits requiring up to 33 qubits and over 1000 interaction terms.</p>
+                <p class="mt-2 text-base text-gray-700">IonQ's Yb$^+$-based trapped-ion hardware offers **all-to-all connectivity**, crucial for dense optimization problems like protein folding and spin-glasses. To manage hardware limitations (finite gate fidelity, circuit depth), **pruning methods** strategically cut small-angle gate operations. A **hybrid quantum-classical strategy** is also used, with classical greedy local search post-processing refining quantum results to achieve optimal solutions. BF-DCQO consistently yields optimal/near-optimal folds for biologically relevant peptides, representing the largest demonstrations on real quantum hardware to date.</p>
+
                 <div class="mt-8 card p-6 rounded-lg">
                     <h3 class="text-xl font-semibold mb-2 text-center">Case Study: The BF-DCQO Algorithm</h3>
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-4">
@@ -239,7 +304,7 @@
                         <div class="text-center">
                             <div class="text-4xl font-bold text-green-600">1000+</div>
                             <div class="text-sm font-medium text-gray-500">Interactions</div>
-                             <p class="text-xs text-gray-500 mt-1">Modeled by the quantum circuit.</p>
+                             <p class="text-xs text-gray-500 mt-1">Modeled by the quantum circuit, leveraging all-to-all connectivity.</p>
                         </div>
                     </div>
                     <div class="mt-6 p-4 bg-gray-50 rounded-lg">
@@ -247,6 +312,17 @@
                         <p class="text-sm text-gray-600 mt-2">The process involves encoding the protein's possible turns onto qubits. The quantum computer then explores the vast landscape of possible folds to find the ground state (lowest energy), which corresponds to the correctly folded protein. The all-to-all connectivity of trapped ions is crucial for modeling the dense web of interactions between amino acids.</p>
                     </div>
                 </div>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">5.3 Other Optimization Problems</h3>
+                <p class="mt-2 text-base text-gray-700">The BF-DCQO algorithm's versatility extends to other NP-hard optimization problems. The same team successfully applied it to **MAX 4-SAT**, a logic problem used in scheduling and circuit design, and **spin-glass problems**, another class of complex optimization challenges. These demonstrations underscore the broad applicability of trapped-ion quantum computers to diverse industrially and scientifically relevant tasks.</p>
+
+                <h2 class="text-3xl font-bold text-gray-800 mt-8">6. Challenges and Future Outlook</h2>
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">6.1 Current Technical Hurdles</h3>
+                <p class="mt-2 text-base text-gray-700">Significant hurdles remain. **Decoherence and noise** from heat, EM radiation, and vibrations constantly threaten qubit states. **Scalability** to thousands of qubits is a major engineering challenge, particularly integrating numerous laser beams and control electrodes for on-chip photonics. **Gate speed**, though improving (e.g., 1.6 µs for MS gates), needs further optimization. **Manufacturing** of advanced ion trap chips requires new automated techniques. High **cost and limited accessibility** also hinder widespread adoption. Finally, a global **workforce and expertise shortage** in this interdisciplinary field poses a challenge.</p>
+
+                <h3 class="text-xl font-semibold mt-6 text-gray-800">6.2 Pathways to Fault-Tolerant QC and Quantum Advantage</h3>
+                <p class="mt-2 text-base text-gray-700">The future is promising. **Continued QEC development** includes higher-distance codes and bias-tailored codes. **Hardware advancements** constantly improve coherence times, fidelities, and control systems (e.g., cryogenic systems). **Modular architectures** like QCCD and photonic interconnects offer viable scaling paths. **Hybrid quantum-classical approaches** (like BF-DCQO with classical post-processing) are crucial for near-term quantum advantage, as demonstrated by protein folding. Significant **investment and collaboration** are accelerating progress, with the quantum computing market projected for substantial growth (e.g., ~$80 billion by 2035-2040), fueling continued R&D.</p>
+
             </section>
         </main>
     </div>
